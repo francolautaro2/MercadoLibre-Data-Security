@@ -9,15 +9,15 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
+SCOPES = ['https://www.googleapis.com/auth/drive']
 
 # Crea el servicio de google drive API
-def create_service():
+def create_drive_service():
     
     creds = None
 
-    if os.path.exists('./credentials/token.json'):
-        creds = Credentials.from_authorized_user_file('./credentials/token.json', SCOPES)
+    if os.path.exists('./credentials/drive_token.json'):
+        creds = Credentials.from_authorized_user_file('./credentials/drive_token.json', SCOPES)
     
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -26,7 +26,7 @@ def create_service():
             flow = InstalledAppFlow.from_client_secrets_file(
                 './credentials/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
-        with open('./credentials/token.json', 'w') as token:
+        with open('./credentials/drive_token.json', 'w') as token:
             token.write(creds.to_json())
 
     service = build('drive', 'v3', credentials=creds)
@@ -36,8 +36,16 @@ def create_service():
 # Obtiene todos los archivos
 def get_files(service_drive):
     results = service_drive.files().list(
-    pageSize=1000, fields="files(name, owners, shared)").execute()
+    pageSize=1000, fields="files(name, owners, shared, mimeType)").execute()
     files = results.get('files', [])
 
     return files
 
+'''def test():
+    s = create_service()
+    files = get_files(s)
+
+    for f in files:
+        print(f)
+
+test()'''
