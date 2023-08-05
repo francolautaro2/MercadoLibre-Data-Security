@@ -3,7 +3,6 @@ import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
 
-
 # Carga las variables de entorno
 load_dotenv()
 
@@ -52,23 +51,23 @@ def insert_data(name, extension, owner, visibilidad, conn):
     
     except Error as e:
         print("Error al insertar datos: ", e)
-    finally:
-        if conn:
-            conn.close()
 
-# Verifica si el archivo existe en la base de datos, si existe retorna 1 si no existe retorna 0
-def chek_file_exists(name, conn):
+# Verifica si el archivo existe en la base de datos, si existe retorna True si no existe retorna False
+def check_file_exists(name, conn):
     try:
-        check_query = "SELECT COUNT(*) FROM drive_inventory WHERE name = %s"
+        check_query = "SELECT * FROM drive_inventory WHERE name = %s"
         cursor = conn.cursor()
         cursor.execute(check_query, (name,))
         
-        file_count = cursor.fetchone()[0]
+        row = cursor.fetchone()
+        if row is not None:
+            return True  # Existe el archivo en la base de datos
+        else:
+            return False  # No existe el archivo en la base de datos
     
     except Error as e:
         print("Error al verificar archivos: ", e)
-        
-    return file_count
+        return False
 
 # Actualiza la visibilidad del archivo 
 def update_file(visibility, file_name, conn):
