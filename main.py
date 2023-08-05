@@ -1,4 +1,4 @@
-from database import create_table, insert_data, check_file_exists, connect_database, update_file
+from database import create_table, insert_data, check_file_exists, connect_database, update_file, read_data
 from google_drive import create_drive_service, get_files
 import os
 
@@ -52,6 +52,6 @@ def main():
             insert_data(file_name, file_extension, owner, visibility, conn)
         # Actualiza la visibilidad del archivo si este cambia
         update_file(visibility, file_name, conn)
-        
+
     conn.close()
 main()

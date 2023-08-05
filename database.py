@@ -83,5 +83,14 @@ def update_file(visibility, file_name, conn):
         print("Error al actualizar archivo: ", e)
 
 # Funcion para leer los datos de la base de datos
-def read_data():
-    pass
+def read_data(conn):
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM drive_inventory")
+        result = cursor.fetchall()
+    
+    except Error as e:
+        print("Error al consultar archivos: ", e)
+
+    return result
+    
