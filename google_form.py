@@ -200,8 +200,6 @@ def create_form(file_names):
             }
             form["items"].append(archivo)
             form["items"].extend(preguntas)
-        else:
-            continue
 
     return form
 
