@@ -40,12 +40,3 @@ def get_files(service_drive):
     files = results.get('files', [])
 
     return files
-
-'''def test():
-    s = create_service()
-    files = get_files(s)
-
-    for f in files:
-        print(f)
-
-test()'''
