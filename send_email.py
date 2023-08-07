@@ -50,11 +50,7 @@ def mesagge(owner, file_name):
     
     return message
 
-# Envia el email al owner del archivo
-def received_email():
-    pass
-
-# Recibe la respuesta del email enviado
+# Envia al email el nombre del archivo y las preguntas
 def send_email(msg, owner):
     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     server.starttls()
