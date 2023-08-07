@@ -34,6 +34,8 @@ def get_values():
     for value in values:
         if value[5] == None:
             archivos.append([value[1], value[3]])
+        else:
+            print("Los archivos ya han sido clasificados")
     
     return archivos
 
@@ -57,18 +59,3 @@ def send_email(msg, owner):
     server.login(EMAIL_SENDER, PASSWORD)
     server.sendmail(EMAIL_SENDER,owner, msg.as_string())
     server.quit()
-
-# Procesa la informacion que responde el usuario
-def processing_response():
-    pass
-
-def main():
-
-    files = get_values()
-    for file in files:
-        msg = mesagge(file[1], file[0])
-        send_email(msg, file[1])
-        classfication = input("Ingrese la clasificacion del archivo: ")
-
-
-main()
