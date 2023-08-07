@@ -9,7 +9,8 @@ extensiones_types = {
     "form": "application/vnd.google-apps.form"
 }
 
-def main():
+
+def save_data():
     # Conexion a la base de datos
     conn = connect_database()
     
@@ -54,4 +55,9 @@ def main():
         update_file(visibility, file_name, conn)
 
     conn.close()
-main()
+
+def main():
+    save_data()
+
+if '__name__' == '__main__':
+    main()

@@ -1,73 +1,78 @@
-from database import connect_database, read_data
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-from dotenv import load_dotenv
+from database import read_data, connect_database
 import os
+from dotenv import load_dotenv
+import smtplib
+import imaplib
+import email
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
-# Cargamos las variables de entorno
+# Carga las variables de entorno de email
 load_dotenv()
 
-email_sender = os.getenv("EMAIL_SENDER")
-password_email = os.getenv("PASSWORD_EMAIL")
+# Configuracion de las cuentas de gmail y los servidores de email
+SMTP_SERVER = 'smtp.gmail.com'
+SMTP_PORT = 587
+IMAP_SERVER = 'imap.gmail.com'
+IMAP_PORT = 993
+EMAIL_SENDER =  os.getenv("EMAIL_SENDER")
+PASSWORD = os.getenv("PASSWORD_EMAIL")
 
-# Obtiene el nombre y la visibilidad del archivo 
-def get_data():
+# Preguntas para realizar al dueño del archivo
+PREGUNTAS = [
+    "¿Cuál es la importancia de este archivo?",
+    "¿Quiénes tienen acceso a este archivo?",
+    "¿Contiene información confidencial?"
+]
+
+# Obtiene los valores de name_file y owner
+def get_values():
     conn = connect_database()
-    archivos = read_data(conn)
-    values = []
-    for i in archivos:
-        values.append([i[1]])
+    values = read_data(conn)
+    # obtengo el nombre del archivo y el propietario
+    archivos = []
+    for value in values:
+        if value[5] == None:
+            archivos.append([value[1], value[3]])
+    
+    return archivos
 
-    return values
+# Crea el Mensaje para cada dueño con su archivo correspondiente
+def mesagge(owner, file_name):
+    asunto = "Cuestionario de Clasificación de Archivo"
+    cuestionario = "\n".join([f"{i + 1}. {pregunta}" for i, pregunta in enumerate(PREGUNTAS)])
+    cuerpo_email = f"Estimado/a {owner},\n\nPor favor, complete el siguiente cuestionario para ayudarnos a clasificar el archivo '{file_name}':\n\n{cuestionario}"
+    message = MIMEMultipart()
+    message['From'] = EMAIL_SENDER
+    message['To'] = owner
+    message['Subject'] = asunto
+    message.attach(MIMEText(cuerpo_email, 'plain'))
+    
+    return message
+
+# Envia el email al owner del archivo
+def received_email():
+    pass
+
+# Recibe la respuesta del email enviado
+def send_email(msg, owner):
+    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+    server.starttls()
+    server.login(EMAIL_SENDER, PASSWORD)
+    server.sendmail(EMAIL_SENDER,owner, msg.as_string())
+    server.quit()
+
+# Procesa la informacion que responde el usuario
+def processing_response():
+    pass
 
 def main():
-    connection = connect_database()
-    data = read_data(connection)
 
-    archivos = []
-    for fields in data:
-        # Agrega el nombre de los archivos al array archivos
-        archivos.append([fields[1], fields[3]])
-    
-    status, email_ids = mail.search(None, "(UNSEEN)")
-
-    for archivo in archivos:
-        name = archivo[0]
-        owner = archivo[1]
-
-        questions = [
-        "¿Cuál es la importancia de este archivo?",
-        "¿Quiénes tienen acceso a este archivo?",
-        "¿Contiene información sensible?",
-        ]
-        
-        questionnaire = "\n".join([f"{i+1}. {question}" for i, question in enumerate(questions)])
-        email_subject = "Cuestionario de Clasificación de Archivo"
-        email_body = f"Estimado/a {owner},\n\nPor favor, complete el siguiente cuestionario para ayudarnos a clasificar el archivo '{name}':\n\n{questionnaire}"
-
-        msg = MIMEMultipart()
-        msg['From'] = email_sender
-        msg['To'] = owner
-        msg['Subject'] = email_subject
-        msg.attach(MIMEText(email_body, 'plain'))
-
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(email_sender, password_email)
-        server.sendmail(email_sender, owner, msg.as_string())
-        server.quit()
-
-        # Esperar respuesta del usuario y clasificar el archivo
-        # Procesar respuesta del usuario
-        for email_id in email_ids[0].split():
-            status, 
-        classification = input(f"Clasificación del archivo '{name}' (Crítico/Alto/Medio/Bajo): ")
+    files = get_values()
+    for file in files:
+        msg = mesagge(file[1], file[0])
+        send_email(msg, file[1])
+        classfication = input("Ingrese la clasificacion del archivo: ")
 
 
-    connection.close()
-
-
-if __name__ == '__main__':
-    main()
+main()
