@@ -14,6 +14,6 @@ def main():
             if archivo[5] == None:
                 msg = mesagge(archivo[3], archivo[1])
                 send_email(msg, archivo[3])
-            
+                
     conn.close()
 main()
