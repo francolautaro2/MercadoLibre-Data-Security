@@ -14,8 +14,9 @@ El proyecto esta hecho en 6 scripts:
 
 ## Requeriments
 Para completar el correcto funcionamiento del programa siga los siguientes pasos:
-1. Configure un proyecto en Google Cloud y habilite la API de Google Drive, una vez hecho eso descargue las credenciales y guardelas en la carpeta credenciales, al archivo json, cambiar nombre por: credentials.json.
+1. Configure un proyecto en Google Cloud y habilite la API de Google Drive, una vez hecho eso descargue las credenciales.
+Al archivo de credenciales que descargue por favor cambiar nombre a credentials.json y guardarlo en la carpeta credentials del proyecto.
 https://cloud.google.com/endpoints/docs/frameworks/enable-api?hl=es-419
 2. En el repositorio encontrar un archivo .env el cual contiene las variables de entorno necesarias para el funcionamiento correcto
 3. Una cuenta de gmail para enviar correos electronicos.
-4. Ejecute el siguiente comando: ` pip install requeriments.txt `
+4. Ejecute el siguiente comando: `pip install requeriments.txt`
