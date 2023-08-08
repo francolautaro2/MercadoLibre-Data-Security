@@ -38,7 +38,7 @@ def create_drive_service():
 # Obtiene todos los archivos
 def get_files(service_drive):
     results = service_drive.files().list(
-    pageSize=1000, fields="files(name, owners, shared, mimeType)").execute()
+    pageSize=1000, fields="files(id, name, owners, shared, mimeType)").execute()
     files = results.get('files', [])
 
     return files
@@ -51,18 +51,17 @@ extensiones_types = {
 }
 
 # Guarda los datos del drive en una base de datos
-def save_data():
+def save_data(service_drive):
     # Conexion a la base de datos
     conn = connect_database()
     
-    # Conexion a la api de google drive
-    service = create_drive_service()
-    
     # Obtenemos los archivos
-    files = get_files(service)
+    files = get_files(service_drive)
 
     # Agrega los archivos en la base de datos
     for file in files:
+        # Obtengo el id del file en drive
+        file_id = file["id"]
         # Obtengo el nombre
         file_name = file["name"]
         # Obtengo la extension
@@ -88,10 +87,14 @@ def save_data():
         file_exist = check_file_exists(file_name, conn)
         # Si no existe lo agrega a la base de datos
         if file_exist == False:
-            insert_data(file_name, file_extension, owner, visibility, conn)
+            insert_data(file_id, file_name, file_extension, owner, visibility, conn)
         # Actualiza la visibilidad del archivo si este cambia
         update_visibility(visibility, file_name, conn)
 
-    
-    
     conn.close()
+
+# Cambia el acceso de publico a privado
+def change_public_access(id_file, service):
+    # Elimina el acceso 
+    delete_public_permissions = service.permissions().delete(fileId=id_file, permissionId="anyoneWithLink")
+    delete_public_permissions.execute()

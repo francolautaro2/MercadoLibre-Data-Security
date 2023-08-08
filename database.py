@@ -22,7 +22,7 @@ def create_table():
         conn = connect_database()
         cursor = conn.cursor()
 
-        with open("./database/inventory.sql", "r") as sql_file:
+        with open("./scheme/inventory.sql", "r") as sql_file:
             sql_script = sql_file.read()
 
         sql_commands = sql_script.split(';')
@@ -38,12 +38,12 @@ def create_table():
 
 
 # Funcion para insertar los datos en la tabla inventory_drive
-def insert_data(name, extension, owner, visibilidad, conn):
+def insert_data(id,name, extension, owner, visibilidad, conn):
     try:
         cursor = conn.cursor()
 
-        sql_insert_query = "INSERT INTO drive_inventory (name, extension, owner, visibility) VALUES (%s, %s, %s, %s)"
-        data = (name, extension, owner, visibilidad)
+        sql_insert_query = "INSERT INTO drive_inventory (fileId, name, extension, owner, visibility) VALUES (%s, %s, %s, %s, %s)"
+        data = (id,name, extension, owner, visibilidad)
 
         cursor.execute(sql_insert_query, data)
 
@@ -109,3 +109,13 @@ def update_criticality(new_criticality, file_name, conn):
         conn.commit()
     except Error as e:
         print("Error al actualizar la criticidad del archivo: ", e)
+
+# Obtiene el id de google drive del archivo
+def get_id_file(file_name, conn):
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT fileId FROM drive_inventory WHERE name = %s", (file_name,))
+        id_file = cursor.fetchone()
+        return id_file
+    except Error as e:
+        print("Error al obtener id de archivo: ", e)
