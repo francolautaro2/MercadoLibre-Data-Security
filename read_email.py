@@ -27,6 +27,3 @@ def check_for_owner_response(owner):
 
     mail.logout()
     return False
-
-    mail.logout()
-    return False
