@@ -11,3 +11,9 @@ El proyecto esta hecho en 6 scripts:
 - read_email.py: Contiene la funcion encargada de leer los emails entrantes.
 - send_email.py: Funcion para enviar emails dado un owner y archivo.
 - main.py: Desde aqui se ejecutan todas las funciones.
+
+## Requeriments
+Para completar el correcto funcionamiento del programa siga los siguientes pasos:
+1. Configure un proyecto en Google Cloud y habilite la API de Google Drive, una vez hecho eso descargue las credenciales.
+https://cloud.google.com/endpoints/docs/frameworks/enable-api?hl=es-419
+
