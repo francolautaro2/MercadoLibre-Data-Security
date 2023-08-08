@@ -21,5 +21,8 @@ https://cloud.google.com/endpoints/docs/frameworks/enable-api?hl=es-419
 3. Una cuenta de gmail para enviar correos electronicos.
 4. Ejecute el siguiente comando: `pip install requeriments.txt`.
 
+## Ejecucion de tests
+Encontrara una carpeta tests donde se encuentran los diferentes tests de la aplicacion.
+
 ## Descripcion del proceso de desarrollo
-Nunca habia usado la API de Google Drive aunque fue muy lindo aprender a utilizarla, tiene muchas cosas que se pueden hacer con la misma. Otro problema que tuve fue que quise tambien usar la API de Google Forms para automatizar mejor el envio de cuestionarios a los owners de los diferentes archivos pero la misma se encuentra en version 1 y le faltan cosas para su correcto funcionamiento. 
+Nunca habia usado la API de Google Drive aunque fue muy lindo aprender a utilizarla, tiene muchas cosas que se pueden hacer con la misma. Otro problema que tuve fue que quise tambien usar la API de Google Forms para automatizar mejor el envio de cuestionarios a los owners de los diferentes archivos pero la misma se encuentra en version 1 y le faltan cosas para su correcto funcionamiento.
