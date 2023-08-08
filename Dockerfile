@@ -1,17 +1,18 @@
-# Usa una imagen base de Python
-FROM python:3.8
+# Usa una imagen base adecuada
+FROM python:3.11
 
 # Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
 # Copia los archivos necesarios al contenedor
-COPY requirements.txt .
+COPY . /app
+# Actualiza pip
+RUN pip install --upgrade pip
+# Instalar dependencias de la app
+RUN pip install -r requirements.txt
 
-# Instala las dependencias
-RUN pip install --no-cache-dir -r requirements.txt
+# Instala mysql
+RUN apt-get update && apt-get install -y default-mysql-client
 
-# Copia el resto de los archivos al contenedor
-COPY . .
-
-# Comando por defecto para ejecutar cuando se inicie el contenedor
+# Corro la aplicacion
 CMD ["python", "main.py"]
