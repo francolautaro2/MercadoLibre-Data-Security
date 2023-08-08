@@ -19,4 +19,7 @@ Al archivo de credenciales que descargue por favor cambiar nombre a credentials.
 https://cloud.google.com/endpoints/docs/frameworks/enable-api?hl=es-419
 2. En el repositorio encontrara un archivo .env el cual contiene las variables de entorno necesarias para el funcionamiento correcto de la aplicacion
 3. Una cuenta de gmail para enviar correos electronicos.
-4. Ejecute el siguiente comando: `pip install requeriments.txt`
+4. Ejecute el siguiente comando: `pip install requeriments.txt`.
+
+## Dificultades con las que me encontre
+Nunca habia usado la API de Google Drive aunque fue muy lindo aprender a utilizarla, tiene muchas cosas que se pueden hacer con la misma. Otro problema que tuve fue que quise tambien usar la API de Google Forms para automatizar mejor el envio de cuestionarios a los owners de los diferentes archivos pero la misma se encuentra en version 1 y le faltan cosas para su correcto funcionamiento.
