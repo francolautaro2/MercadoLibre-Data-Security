@@ -70,7 +70,7 @@ def check_file_exists(name, conn):
         return False
 
 # Actualiza la visibilidad del archivo 
-def update_file(visibility, file_name, conn):
+def update_visibility(visibility, file_name, conn):
     try:
         cursor = conn.cursor()
         # Actualizo la visibilidad del archivo
@@ -93,4 +93,19 @@ def read_data(conn):
         print("Error al consultar archivos: ", e)
 
     return result
-    
+
+# Actualiza la visibilidad del archivo
+def update_criticality(new_criticality, file_name, conn):
+    try:
+        cursor = conn.cursor()
+        # Sentencia SQL para actualizar la columna criticality
+        update_query = f"UPDATE drive_inventory SET criticality = %s WHERE name = %s"
+        update_values = (new_criticality.upper(), file_name)
+
+        # Ejecuta la consulta de actualización
+        cursor.execute(update_query, update_values)
+
+        # Realiza la confirmación de la transacción
+        conn.commit()
+    except Error as e:
+        print("Error al actualizar la criticidad del archivo: ", e)

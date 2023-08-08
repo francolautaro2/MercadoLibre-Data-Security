@@ -1,0 +1,20 @@
+Crítico:
+    El archivo contiene información altamente confidencial o privada que podría tener un impacto significativo si se accede de manera no autorizada.
+    Está relacionado con datos financieros sensibles o información crucial para el negocio.
+    Su pérdida, daño o acceso no autorizado podría causar un daño irreparable a la empresa.
+    El archivo está protegido por regulaciones específicas que requieren medidas de seguridad rigurosas.
+
+Alto:
+    El archivo contiene información confidencial pero no crítica.
+    Está relacionado con datos financieros o información sensible, pero su impacto no es tan severo como en los archivos críticos.
+    Su pérdida o acceso no autorizado podría tener un impacto negativo, pero no sería catastrófico.
+    
+Medio:
+    El archivo tiene cierta relevancia para las operaciones o proyectos, pero no contiene información altamente confidencial.
+    Su pérdida o acceso no autorizado no tendría un impacto significativo en el negocio.
+    No hay regulaciones específicas que exijan medidas de seguridad extremas.
+
+Bajo:
+    El archivo no está directamente relacionado con información sensible ni con operaciones críticas.
+    Su pérdida o acceso no autorizado no afectaría de manera importante al negocio.
+    No existen regulaciones que requieran medidas de seguridad especiales.

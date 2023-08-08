@@ -20,9 +20,11 @@ PASSWORD = os.getenv("PASSWORD_EMAIL")
 
 # Preguntas para realizar al dueño del archivo
 PREGUNTAS = [
-    "¿Cuál es la importancia de este archivo?",
-    "¿Quiénes tienen acceso a este archivo?",
-    "¿Contiene información confidencial?"
+    "¿Este archivo es esencial para el funcionamiento de la organización?",
+    "¿La pérdida o inaccesibilidad de este archivo tendría un impacto catastrófico?",
+    "¿Este archivo contiene información confidencial o personal?",
+    "¿Este archivo está relacionado con la operación crítica de algún proceso?",
+    "¿Es necesario mantener este archivo para cumplir con regulaciones o normativas?",
 ]
 
 # Obtiene los valores de name_file y owner
@@ -41,7 +43,7 @@ def get_values():
 
 # Crea el Mensaje para cada dueño con su archivo correspondiente
 def mesagge(owner, file_name):
-    asunto = "Cuestionario de Clasificación de Archivo"
+    asunto = "Cuestionario de Clasificacion de Archivo"
     cuestionario = "\n".join([f"{i + 1}. {pregunta}" for i, pregunta in enumerate(PREGUNTAS)])
     cuerpo_email = f"Estimado/a {owner},\n\nPor favor, complete el siguiente cuestionario para ayudarnos a clasificar el archivo '{file_name}':\n\n{cuestionario}"
     message = MIMEMultipart()

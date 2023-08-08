@@ -6,9 +6,8 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 
-from database import create_table, insert_data, check_file_exists, connect_database, update_file, read_data
+from database import insert_data, check_file_exists, connect_database, update_visibility, read_data
 import os
 
 # If modifying these scopes, delete the file token.json.
@@ -91,6 +90,8 @@ def save_data():
         if file_exist == False:
             insert_data(file_name, file_extension, owner, visibility, conn)
         # Actualiza la visibilidad del archivo si este cambia
-        update_file(visibility, file_name, conn)
+        update_visibility(visibility, file_name, conn)
 
+    
+    
     conn.close()
