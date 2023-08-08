@@ -4,6 +4,9 @@ Se pidio realizar un script para que obtenga datos de archivos de google Drive, 
 
 ## Estrategias utilizadas
 El proyecto se divide en 6 scripts de python.
-- google_drive.py: este archivo maneja la conexion a la api de google drive y extrae la informacion necesaria de los archivos.
-- database.py: este archivo se ocupa de manejar todas las funciones relacionadas a la base de datos, leer, actualizar y extraer.
-- conexióny:  
+S
+- google_drive.py: Este archivo maneja la conexion a la api de google drive y extrae la informacion necesaria de los archivos.
+- database.py: Este archivo se ocupa de manejar todas las funciones relacionadas a la base de datos, leer, actualizar y extraer.
+- classification.py: Este archivo contiene la funcion para clasificar el archivo dado.
+- read_email.py: Archivo para leer los emails entrantes y tener las respuestas de los diferentes emails enviados.
+- send_email.py: Se ocupa de enviar los emails con la informacion necesaria. 
