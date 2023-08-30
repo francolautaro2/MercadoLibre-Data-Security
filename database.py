@@ -1,121 +1,102 @@
+import aiomysql
 import os
-import mysql.connector
-from mysql.connector import Error
 from dotenv import load_dotenv
 
-# Carga las variables de entorno
 load_dotenv()
 
-# Funcion para conectarse a la base de datos del inventario
-def connect_database():
-    conn = mysql.connector.connect(
-        user=os.getenv("USER"),
-        password=os.getenv("PASSWORD"),
+# Guarda los archivos en la base de datos
+async def guardar_datos(data_list):
+    # Conexion a la base de datos
+    pool = await aiomysql.create_pool(
         host=os.getenv("HOST"),
-        database=os.getenv("DATABASE")
+        port=int(os.getenv("PORT")),
+        user=os.getenv("USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DATABASE"),
+        autocommit=True
     )
-    return conn
+    # Query para guardar datos
+    async with pool.acquire() as conn:
+        async with conn.cursor() as cur:
+            for data in data_list:
+                fileId = data[0]
+                await cur.execute(
+                    "SELECT fileId, name, extension, owner, visibility FROM drive_inventory WHERE fileId = %s",
+                    (fileId,)
+                )
+                existing_record = await cur.fetchone()
+                if existing_record:
+                    # Si existe un registro con el mismo id
+                    print(f"ID: '{fileId}' ya existe en la base de datos.")
+                else:
+                    await cur.execute(
+                        "INSERT INTO drive_inventory (fileId, name, extension, owner, visibility) VALUES (%s, %s, %s, %s, %s)",
+                        (data[0], data[1], data[2], data[3], data[4])
+                    )
+                    print(f"ID: '{fileId}' insertado en la base de datos.")
+            print("Datos guardados en la base de datos")
 
-# Creamos la tabla en la base de datos
-def create_table():
+# Actualiza la criticidad de un archivo
+async def update_criticality(new_criticality, file_id):
+    pool = await aiomysql.create_pool(
+        host=os.getenv("HOST"),
+        port=int(os.getenv("PORT")),
+        user=os.getenv("USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DATABASE"),
+        autocommit=True
+    )
+
     try:
-        conn = connect_database()
-        cursor = conn.cursor()
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cursor:
+                # Sentencia SQL para actualizar la columna criticality
+                update_query = f"UPDATE drive_inventory SET criticality = %s WHERE fileId = %s"
+                update_values = (new_criticality.upper(), file_id)
 
-        with open("./scheme/inventory.sql", "r") as sql_file:
-            sql_script = sql_file.read()
+                # Ejecuta la consulta de actualización
+                await cursor.execute(update_query, update_values)
 
-        sql_commands = sql_script.split(';')
-
-        for command in sql_commands:
-            if command.strip():
-                cursor.execute(command)
-
-        conn.commit()
-        
-    except Error as e:
-        print("Error en la base de datos: ", e)
-
-
-# Funcion para insertar los datos en la tabla inventory_drive
-def insert_data(id,name, extension, owner, visibilidad, conn):
-    try:
-        cursor = conn.cursor()
-
-        sql_insert_query = "INSERT INTO drive_inventory (fileId, name, extension, owner, visibility) VALUES (%s, %s, %s, %s, %s)"
-        data = (id,name, extension, owner, visibilidad)
-
-        cursor.execute(sql_insert_query, data)
-
-        conn.commit()
-    
-    except Error as e:
-        print("Error al insertar datos: ", e)
-
-# Verifica si el archivo existe en la base de datos, si existe retorna True si no existe retorna False
-def check_file_exists(name, conn):
-    try:
-        check_query = "SELECT * FROM drive_inventory WHERE name = %s"
-        cursor = conn.cursor()
-        cursor.execute(check_query, (name,))
-        
-        row = cursor.fetchone()
-        if row is not None:
-            return True  # Existe el archivo en la base de datos
-        else:
-            return False  # No existe el archivo en la base de datos
-    
-    except Error as e:
-        print("Error al verificar archivos: ", e)
-        return False
-
-# Actualiza la visibilidad del archivo 
-def update_visibility(visibility, file_name, conn):
-    try:
-        cursor = conn.cursor()
-        # Actualizo la visibilidad del archivo
-        update_query = "UPDATE drive_inventory SET visibility = %s WHERE name = %s"
-        update_data = (visibility, file_name)
-        cursor.execute(update_query,update_data)
-        conn.commit()
-    
-    except Error as e:
-        print("Error al actualizar archivo: ", e)
-
-# Funcion para leer los datos de la base de datos
-def read_data(conn):
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM drive_inventory")
-        result = cursor.fetchall()
-    
-    except Error as e:
-        print("Error al consultar archivos: ", e)
-
-    return result
-
-# Actualiza la visibilidad del archivo
-def update_criticality(new_criticality, file_name, conn):
-    try:
-        cursor = conn.cursor()
-        # Sentencia SQL para actualizar la columna criticality
-        update_query = f"UPDATE drive_inventory SET criticality = %s WHERE name = %s"
-        update_values = (new_criticality.upper(), file_name)
-
-        # Ejecuta la consulta de actualización
-        cursor.execute(update_query, update_values)
-
-        # Realiza la confirmación de la transacción
-        conn.commit()
-    except Error as e:
+                # No es necesario commit con autocommit=True
+    except aiomysql.Error as e:
         print("Error al actualizar la criticidad del archivo: ", e)
 
-# Obtiene el id de google drive del archivo
-def get_id_file(file_name, conn):
+# Actualiza la visibilidad del archivo
+async def update_visibility(visibility, file_id):
+    pool = await aiomysql.create_pool(
+        host=os.getenv("HOST"),
+        port=int(os.getenv("PORT")),
+        user=os.getenv("USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DATABASE"),
+        autocommit=True
+    )
+    
     try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT fileId FROM drive_inventory WHERE name = %s", (file_name,))
-        id_file = cursor.fetchone()
-        return id_file
-    except Error as e:
-        print("Error al obtener id de archivo: ", e)
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cursor:
+                # Actualizo la visibilidad del archivo
+                update_query = "UPDATE drive_inventory SET visibility = %s WHERE fileId = %s"
+                update_data = (visibility, file_id)
+                await cursor.execute(update_query, update_data)
+                await conn.commit()
+
+    except aiomysql.Error as e:
+        print("Error al actualizar archivo: ", e)
+
+
+# Obtener datos no clasificados
+async def obtener_datos_no_clasificados():
+    pool = await aiomysql.create_pool(
+        host=os.getenv("HOST"),
+        port=int(os.getenv("PORT")),
+        user=os.getenv("USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DATABASE"),
+    )
+    
+    async with pool.acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute("SELECT fileId, name, owner FROM drive_inventory WHERE criticality IS NULL AND visibility = 'PUBLICO'")
+            files = await cur.fetchall()
+    return files

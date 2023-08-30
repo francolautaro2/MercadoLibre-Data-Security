@@ -18,3 +18,12 @@ Bajo:
     El archivo no está directamente relacionado con información sensible ni con operaciones críticas.
     Su pérdida o acceso no autorizado no afectaría de manera importante al negocio.
     No existen regulaciones que requieran medidas de seguridad especiales.
+
+
+Preguntas para el formulario de google:
+1. ¿Este archivo contiene información confidencial o privada?
+2. ¿La pérdida o daño de este archivo afectaría directamente la operación diaria?
+3. ¿El archivo está relacionado con la cumplimiento de regulaciones legales o normativas?
+4. ¿La información en este archivo es esencial para proyectos o tareas en curso?
+5. ¿La falta de acceso a este archivo causaría retrasos significativos?
+6. ¿Este archivo es necesario para la continuidad a largo plazo del negocio o proyecto?

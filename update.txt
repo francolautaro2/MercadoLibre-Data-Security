@@ -1,0 +1,9 @@
+Funcionalidades a corregir:
+    - Poder diferenciar los archivos si cambian de nombre
+        * Utilizar el idFile que le asigna drive a cada archivo
+    - Si un archivo es eliminado tambien eliminarlo de la base de datos
+    - Agregar docker-compose para automatizar despliegue
+
+Funcionalidades a agregar:
+    - Poder enviar formularios mediante la utilizacion de la api de google forms
+    - Crear un clasificador que pondere las respuestas del usuario para poder establecer un valor de criticidad para el archivo
