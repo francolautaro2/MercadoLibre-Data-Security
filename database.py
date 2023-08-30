@@ -97,6 +97,7 @@ async def obtener_datos_no_clasificados():
     
     async with pool.acquire() as conn:
         async with conn.cursor() as cur:
+            
             await cur.execute("SELECT fileId, name, owner FROM drive_inventory WHERE criticality IS NULL AND visibility = 'PUBLICO'")
             files = await cur.fetchall()
     return files

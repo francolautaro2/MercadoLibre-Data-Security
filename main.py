@@ -8,7 +8,7 @@ from email_form import enviar_correos
 
     
 async def main():
-    print("Inicio del programa")
+    print("Running app..")
     form_service = await get_forms_service()
     drive = await get_drive()
     
