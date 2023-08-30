@@ -30,7 +30,8 @@ Nunca habia usado la API de Google Drive aunque fue muy lindo aprender a utiliza
 ### En la anterior version la key unica era el name, ahora se cambio a id para evitar errores con archivos que contengan el mismo nombre.
 ### Ahora la aplicacion se maneja con formularios de google y espera respuestas, no hace falta que se responda un cuestionario para seguir con el siguiente.
 ### Ahora la aplicacion pondera las respuestas de los usuarios mediante puntajes.
-### Se agrego el docker-compose.yml
+### Se ignoran los archivos que esten privados, solo se envian archivos publicos para ser clasificados.
+### Se agrego el docker-compose.yml.
 ## Instrucciones
 1. Configure en el google drive de la empresa una carpeta llamada formularios, ahi se van a almacenar todos los formularios de google para el cual van a ser enviados a los usuarios.
 2. Cree un formulario de google que contenga preguntas cerradas de seguridad, yo use de ejemplo: ¿Este archivo contiene información confidencial o privada?, ¿La pérdida o daño de este archivo afectaría directamente la operación diaria?, ¿El archivo está relacionado con la cumplimiento de regulaciones legales o normativas?, ¿La información en este archivo es esencial para proyectos o tareas en curso?, ¿La falta de acceso a este archivo causaría retrasos significativos?, ¿Este archivo es necesario para la continuidad a largo plazo del negocio o proyecto? (Puede crear cuantas preguntas quiera)
