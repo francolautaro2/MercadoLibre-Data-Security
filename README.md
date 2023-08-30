@@ -33,7 +33,7 @@ Nunca habia usado la API de Google Drive aunque fue muy lindo aprender a utiliza
 ### Se ignoran los archivos que esten privados, solo se envian archivos publicos para ser clasificados.
 ### Se agrego el docker-compose.yml.
 ## Instrucciones
-1. Configure en el google drive de la empresa una carpeta llamada formularios, ahi se van a almacenar todos los formularios de google para el cual van a ser enviados a los usuarios.
+1. Configure en el google drive de la empresa una carpeta llamada formularios y hagala de acceso publico, ahi se van a almacenar todos los formularios de google para el cual van a ser enviados a los usuarios.
 2. Cree un formulario de google que contenga preguntas cerradas de seguridad, yo use de ejemplo: ¿Este archivo contiene información confidencial o privada?, ¿La pérdida o daño de este archivo afectaría directamente la operación diaria?, ¿El archivo está relacionado con la cumplimiento de regulaciones legales o normativas?, ¿La información en este archivo es esencial para proyectos o tareas en curso?, ¿La falta de acceso a este archivo causaría retrasos significativos?, ¿Este archivo es necesario para la continuidad a largo plazo del negocio o proyecto? (Puede crear cuantas preguntas quiera, las preguntas deben tener de opcion solamente Si o No) 
 3. En el archivo .env encontrara una variable llamada ID_FORMULARIO, alli debera pegar el id del formulario creado anteriormente.
 4. Ejecute el programa `python main.py`
