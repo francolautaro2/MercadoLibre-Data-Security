@@ -61,3 +61,8 @@ async def get_files(service_drive):
     
     return data
 
+# Cambia el acceso de publico a privado
+async def change_public_access(service, id_file):
+    # Elimina el acceso 
+    delete_public_permissions = service.permissions().delete(fileId=id_file, permissionId="anyoneWithLink")
+    delete_public_permissions.execute()

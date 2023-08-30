@@ -97,7 +97,7 @@ async def read_responses(service_form, service_drive, formularios):
                         respuestas.append(value)
                 form_name = form_info[1]
                 file_id = form_info[0]
-                await asignar_clasificacion_ponderada(respuestas, file_id)
+                await asignar_clasificacion_ponderada(service_drive, respuestas, file_id)
                 print("Los valores para el formulario:", form_name, "son:", respuestas)
                 print("Formulario eliminado")
                 service_drive.files().delete(fileId=form_id).execute()

@@ -1,3 +1,7 @@
+CREATE DATABASE if NOT EXISTS challenge_drive_inventory;
+
+USE challenge_drive_inventory;
+
 -- Crear la tabla
 CREATE TABLE IF NOT EXISTS drive_inventory (
     id INT AUTO_INCREMENT PRIMARY KEY,

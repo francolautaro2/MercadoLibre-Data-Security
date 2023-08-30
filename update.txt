@@ -1,7 +1,6 @@
 Funcionalidades a corregir:
     - Poder diferenciar los archivos si cambian de nombre
         * Utilizar el idFile que le asigna drive a cada archivo
-    - Si un archivo es eliminado tambien eliminarlo de la base de datos
     - Agregar docker-compose para automatizar despliegue
 
 Funcionalidades a agregar:
