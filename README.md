@@ -25,3 +25,15 @@ https://support.google.com/accounts/answer/185833?hl=es
 
 ## Descripcion del proceso de desarrollo
 Nunca habia usado la API de Google Drive aunque fue muy lindo aprender a utilizarla, tiene muchas cosas que se pueden hacer con la misma. Otro problema que tuve fue que quise tambien usar la API de Google Forms para automatizar mejor el envio de cuestionarios a los owners de los diferentes archivos pero la misma se encuentra en version 1 y le faltan cosas para su correcto funcionamiento.
+
+## Update 2.0.0 despues del feedback
+### En la anterior version la key unica era el name, ahora se cambio a id para evitar errores con archivos que contengan el mismo nombre.
+### Ahora la aplicacion se maneja con formularios de google y espera respuestas, no hace falta que se responda un cuestionario para seguir con el siguiente.
+### Ahora la aplicacion pondera las respuestas de los usuarios mediante puntajes.
+### Se ignoran los archivos que esten privados, solo se envian archivos publicos para ser clasificados.
+### Se agrego el docker-compose.yml.
+## Instrucciones
+1. Configure en el google drive de la empresa una carpeta llamada formularios, ahi se van a almacenar todos los formularios de google para el cual van a ser enviados a los usuarios.
+2. Cree un formulario de google que contenga preguntas cerradas de seguridad, yo use de ejemplo: ¿Este archivo contiene información confidencial o privada?, ¿La pérdida o daño de este archivo afectaría directamente la operación diaria?, ¿El archivo está relacionado con la cumplimiento de regulaciones legales o normativas?, ¿La información en este archivo es esencial para proyectos o tareas en curso?, ¿La falta de acceso a este archivo causaría retrasos significativos?, ¿Este archivo es necesario para la continuidad a largo plazo del negocio o proyecto? (Puede crear cuantas preguntas quiera, las preguntas deben tener de opcion solamente Si o No) 
+3. En el archivo .env encontrara una variable llamada ID_FORMULARIO, alli debera pegar el id del formulario creado anteriormente.
+4. Ejecute el programa `python main.py`
