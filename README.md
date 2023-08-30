@@ -7,9 +7,8 @@ La estrategia que utilice para realizar el desafio fue usar la API de Google Dri
 El proyecto esta hecho en 6 scripts:
 - `google_drive.py`: Este archivo maneja la conexion a la api de google drive y extrae la informacion necesaria de los archivos.
 - `database.py`: Este archivo se ocupa de manejar todas las funciones relacionadas a la base de datos, leer, actualizar y extraer.
-- `classification.py`: Contiene la funcion para clasificar el archivo por el usuario.
-- `read_email.py`: Contiene la funcion encargada de leer los emails entrantes.
-- `send_email.py`: Funcion para enviar emails dado un owner y archivo.
+- `ponderation.py`: Contiene la funcion para clasificar el archivo segun las respuestas del usuario.
+- `email_form.py`: Se encarga de enviar los archivos al usuario con el link del formulario vinculado.
 - `main.py`: Desde aqui se ejecutan todas las funciones.
 
 ## Requeriments
