@@ -15,7 +15,7 @@ async def enviar_correo(destinatario, archivo, url_formulario, smtp_server, smtp
     msg['Subject'] = archivo 
      
     # Agregar el contenido del correo
-    mensaje = f"Estimado dueno,\n\nAdjunto encontrara su archivo importante: {archivo}.\n Responda el siguiente cuestionario para poder clasificarlo: {url_formulario} \n\nSaludos,\nTu Equipo"
+    mensaje = f"Estimado dueno,\n\nAdjunto encontrara su archivo importante: {archivo}.\n \nAbrir el link enviado en una pestaña en incognito, para evitar errores\nResponda el siguiente cuestionario para poder clasificarlo: {url_formulario} \n\nSaludos,\nTu Equipo"
     msg.attach(MIMEText(mensaje, 'plain'))
 
     # Iniciar la conexión al servidor SMTP y enviar el correo
