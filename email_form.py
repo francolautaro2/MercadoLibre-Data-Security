@@ -1,8 +1,10 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
-from database import obtener_datos_no_clasificados
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Funcion para enviar correos
 async def enviar_correo(destinatario, archivo, url_formulario, smtp_server, smtp_port, smtp_username, smtp_password):
@@ -29,8 +31,8 @@ async def enviar_correos(drive_service,formularios):
     # Configurar los detalles del servidor SMTP
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    smtp_username = "francolau03@gmail.com"
-    smtp_password = "hjdjgxfluccumeiv"
+    smtp_username = os.getenv("EMAIL_SENDER")
+    smtp_password = os.getenv("PASSWORD_EMAIL")
 
     for formId, data in formularios.items():
         # Obtiene la url para compartir el archivo

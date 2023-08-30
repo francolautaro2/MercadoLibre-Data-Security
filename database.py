@@ -101,3 +101,54 @@ async def obtener_datos_no_clasificados():
             await cur.execute("SELECT fileId, name, owner FROM drive_inventory WHERE criticality IS NULL AND visibility = 'PUBLICO'")
             files = await cur.fetchall()
     return files
+
+# Elimina un archivo de la base de datos dado su id
+async def delete_item_by_id(id_file):
+    # Configura la información de la conexión a la base de datos
+    pool = await aiomysql.create_pool(
+        host=os.getenv("HOST"),
+        port=int(os.getenv("PORT")),
+        user=os.getenv("USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DATABASE"),
+        autocommit=True
+    )
+
+    # Intenta conectar a la base de datos y eliminar el elemento
+    try:
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cursor:
+                # Define la consulta SQL para eliminar el elemento
+                delete_query = "DELETE FROM drive_inventory WHERE fileId = %s"
+                await cursor.execute(delete_query, (id_file,))
+                await conn.commit()
+    except Exception as e:
+        print(f"Error al eliminar el elemento: {e}")
+
+# Obtiene todos los datos de la base de datos
+async def get_all_file_ids():
+    # Configura la información de la conexión a la base de datos
+    pool = await aiomysql.create_pool(
+        host=os.getenv("HOST"),
+        port=int(os.getenv("PORT")),
+        user=os.getenv("USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DATABASE"),
+        autocommit=True
+    )
+
+    file_ids = []
+
+    # Intenta conectar a la base de datos y obtener los fileIds
+    try:
+        async with pool.acquire() as conn:
+            async with conn.cursor() as cursor:
+                # Define la consulta SQL para obtener todos los fileIds
+                select_query = "SELECT fileId FROM drive_inventory"
+                await cursor.execute(select_query)
+                rows = await cursor.fetchall()
+                file_ids = [row[0] for row in rows]
+    except Exception as e:
+        print(f"Error al obtener los fileIds: {e}")
+
+    return file_ids
