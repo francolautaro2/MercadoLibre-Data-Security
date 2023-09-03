@@ -7,7 +7,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 import os
-from database import update_visibility
+from database import update_visibility, update_criticality
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
@@ -49,6 +49,8 @@ async def get_files(service_drive):
             visibility = "Publico"
         elif i["shared"] == False:
             visibility = "Privado"
+            # Si el archivo es privado lo clasifica como critico
+            await update_criticality("CRITICO", id)
         file_extension = os.path.splitext(name)[1]
         if file_extension == "":
             ext = i["mimeType"]
